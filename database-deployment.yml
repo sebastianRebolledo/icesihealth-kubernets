@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+   name: databaseservice-deployment
+   labels:
+     app: databaseservice
+spec:
+   #minReadySeconds: 3
+   #strategy:
+     #type: RollingUpdate
+     #rollingUpdate: 
+        #maxSurge: 1
+        #maxUnavailable: 1
+   replicas: 1
+   selector:
+      matchLabels:
+         app: databaseservice
+   template:
+       metadata:
+         labels:
+           app: databaseservice
+       spec:
+         containers:
+           - name: databaseservice
+             image: sereme98/couchdb-icesi
+             ports:
+               - containerPort: 5984
+             env:
+               - name: COUCHDB_USER
+                 value: admin
+               - name: COUCHDB_PASSWORD
+                 value: password

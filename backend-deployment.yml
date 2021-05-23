@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+   name: backendservice-deployment
+   labels:
+     app: backendservice
+spec:
+   #minReadySeconds: 3
+   #strategy:
+     #type: RollingUpdate
+     #rollingUpdate: 
+        #maxSurge: 1
+        #maxUnavailable: 1
+   replicas: 1
+   selector:
+      matchLabels:
+         app: backendservice
+   template:
+       metadata:
+         labels:
+           app: backendservice
+       spec:
+         containers:
+           - name: backendservice
+             image: sereme98/backend2
+             ports:
+               - containerPort: 8089
+             env:
+               - name: DATABASE_URL
+                 value: http://admin:password@db:5984
